@@ -8,8 +8,32 @@ const createBook= async function (req, res) {
     res.send({msg: savedData})
 }
 
+//2nd
+const getBookList = async function (req, res){
+    let getData = await BookModel.find().select({bookName : 1 ,authorName:1 , _id: 0})
+    res.send({msg : getData})
+}
+
+//3rd
+const getBooksInYear = async function (req, res){
+    let yearData =req.body.year
+    
+    let bookYear = await BookModel.find({year:yearData})
+    res.send({msg : bookYear})
+}
+
+
+
+
+
+
+
+
+
+
 const getBooksData= async function (req, res) {
 
+    
     // let allBooks= await BookModel.find( ).count() // COUNT
 
     // let allBooks= await BookModel.find( { authorName : "Chetan Bhagat" , isPublished: true  } ) // AND
@@ -82,4 +106,8 @@ const getBooksData= async function (req, res) {
 
 
 module.exports.createBook= createBook
-module.exports.getBooksData= getBooksData
+module.exports.getBookList= getBookList
+ module.exports.getBooksInYear= getBooksInYear
+// module.exports.getParticularBooks= getParticularBooks
+// module.exports.getXINRBooks= getXINRBooks
+// module.exports.getRandomBooks= getRandomBooks
