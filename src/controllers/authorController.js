@@ -24,30 +24,64 @@ module.exports.createPublisher=createPublisher;
 
 // =====================================================================
 //3rd
-const createBook = async function(req,res){
-    let bookdata = req.body
 
-    if(bookdata.author && bookdata.publisher){
-    let checkAuthorId = await authorModel.findById(bookdata.author);
-    let checkPublisherId = await pubModel.findById(bookdata.publisher);
+const createBook= async function (req, res) {
+    let book = req.body
+    let authorId = book.author
+    let publisherId = book.publisher
 
-    if(checkAuthorId){
-
-        if(checkPublisherId){
-            let showData = await bookModel.create(bookdata);
-            res.send({data:showData , status: true});
-        }else{
-            res.send({msg: "Publisher Id is not vaild." , status: false});
-        }
-    }else{
-        res.send({msg : "Author Id is not vaild.", status: false});
+    //3 a)
+    if(!authorId) {
+        return res.send({message: "Author id must be present in the book detials"})   
     }
+
+    //3 b)
+    let author = await authorModel.findById(authorId)
+
+    if(!author) {
+        return res.send({message: "Not a valid author id"})
+    }
+
+    //3 c)
+    if(!publisherId) {
+        return res.send({message: "Publihser id must be present in the book details"})
+    }
+
+    //3 d)
+    let publisher = await pubModel.findById(publisherId) 
+
+    if(!publisher) {
+        return res.send({message: "Not a valid publisher id"})
+    }
+
+    let bookCreated = await bookModel.create(book)
+    res.send({data: bookCreated})
+}
+module.exports.createBook=createBook;
+// const createBook = async function(req,res){
+//     let bookdata = req.body
+
+//     if(bookdata.author && bookdata.publisher){
+//     let checkAuthorId = await authorModel.findById(bookdata.author);
+//     let checkPublisherId = await pubModel.findById(bookdata.publisher);
+
+//     if(checkAuthorId){
+
+//         if(checkPublisherId){
+//             let showData = await bookModel.create(bookdata);
+//             res.send({data:showData , status: true});
+//         }else{
+//             res.send({msg: "Publisher Id is not vaild." , status: false});
+//         }
+//     }else{
+//         res.send({msg : "Author Id is not vaild.", status: false});
+//     }
    
-   }else{
-    res.send({msg : "Author Id & Publisher Id is required.", status: false});
-   }
+//    }else{
+//     res.send({msg : "Author Id & Publisher Id is required.", status: false});
+//    }
  
-};
+// };
 
 module.exports.createBook=createBook;
 
