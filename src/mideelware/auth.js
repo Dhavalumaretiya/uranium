@@ -11,11 +11,15 @@ const authUser = function(req, res, next){
     return res.send({ status: false, msg: "Token must be present" });
   }
 
-  let verifyUser = jwt.verify(token, "Functionup-Uranium");
+  // Authorization...
+  let decodedtoken = jwt.verify(token,"Functionup-Uranium")
 
-  if (!verifyUser){
-    return res.send({ status: false, msg: "Token is incorrect" });
-  }
+  let userTobemodifide = req.params.userId
+  let userlogedin =  decodedtoken.userId
+  
+  if(userTobemodifide != userlogedin) return res.send({status:false,msg:"not allowed to login"})
+
+  
   next()
 }
 

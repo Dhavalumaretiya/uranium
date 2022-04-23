@@ -1,3 +1,5 @@
+
+
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
@@ -102,4 +104,23 @@ const deleteUser = async function(req, res){
     res.send({status: true, data: user});
   };
 
-  module.exports.deleteUser=deleteUser
+  module.exports.deleteUser=deleteUser;
+  // module.exports = {a ,b }
+
+
+
+  // @ts-check
+  const postmessage = async function(req, res){
+    let msg = req.body.msg
+    
+    let user = await userModel.findById(req.params.userId)
+    
+    if(!user) return res.send({status:false , msg:"NO such user exists"})
+    let updatemsg = user.posts
+    updatemsg.push(msg)
+    let updateuser = await userModel.findOneAndUpdate({_id:user._id},{posts:updatemsg},{new:true})
+
+    return res.send({status:true , msg:updateuser})
+  }
+module.exports.postmessage=postmessage
+  
