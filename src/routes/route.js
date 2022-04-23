@@ -13,7 +13,7 @@ router.post("/users", userController.createUser);
 router.post("/login",  userController.loginUser);
 
 //The userId is sent by front end
-router.get("/users/:userId", Auth.authUser, userController.getUserData);
+router.get("/user/:userId", Auth.authUser, userController.getUserData);
 
 router.put("/users/:userId", Auth.authUser, userController.updateUser);
 

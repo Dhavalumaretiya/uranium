@@ -11,7 +11,7 @@ const authUser = function(req, res, next){
     return res.send({ status: false, msg: "Token must be present" });
   }
 
-  // Authorization...
+  // // Authorization...
   let decodedtoken = jwt.verify(token,"Functionup-Uranium")
 
   let userTobemodifide = req.params.userId
