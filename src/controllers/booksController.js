@@ -130,7 +130,7 @@ const updateById = async function (req, res) {
   catch (err) {
     return res.status(500).send({ status: false, message: err.message })
   }
-}
+};
 
 //Delete 
 const deleteById = async function (req, res) {

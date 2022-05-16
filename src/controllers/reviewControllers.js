@@ -31,7 +31,7 @@ const createReview = async function (req, res) {
 
 
     details["reviewData"] = [createData]
-    return res.status(201).send({ status: true, data: details })
+    return res.status(201).send({ status: true, data: details });
 
 
     } catch (err) {
@@ -45,7 +45,7 @@ const updateReviewById = async function (req, res) {
         let data = req.params.bookId;
         let data1 = req.params.reviewId;
         let updateData = req.body
-        if (updateData.length == 0) return res.status(400).send({ staus: false, message: "Invalid request. Please provide Details in body and update" })
+        if (Object.keys(updateData).length == 0) return res.status(400).send({ staus: false, message: "Invalid request. Please provide Details" })
         if(!data){
             return res.status(400).send({ status: false, message: "plz provide bookid in params" })
         }
@@ -107,14 +107,4 @@ const deleteReviewById = async function (req, res) {
 
 module.exports = { createReview, updateReviewById, deleteReviewById }
 
-  // const review = req.body
-        // let arr = Object.keys(review)
-        // if (arr.length == 0) return res.status(400).send({ staus: false, message: "Invalid request. Please provide Details" })
-        // let data = req.params.bookId;
-        // let book = await booksModel.findOne( { _id: data , isDeleted: false });
-        // if (!book) return res.status(404).send({ status: false, message: 'Book Not Found' })
-
-        // let dataCreated = await reviewModel.create(review)
-        // // book._doc["reviewdata"]=[dataCreated]
-        // let reviewData = await booksModel.findOneAndUpdate({ _id: data , isDeleted: false  },{},{new:true})
-        // res.status(201).send({status:true, message: 'Success',data: dataCreated });
+ 

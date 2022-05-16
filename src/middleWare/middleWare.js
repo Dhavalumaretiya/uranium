@@ -59,17 +59,5 @@ const authorisation = async function (req, res, next) {
 
 
 
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc5N2UwZmUzMTg1YjQyMmZhZjZiYzMiLCJiYXRjaCI6InVyYW5pdW0iLCJvcmdhbmlzYXRpb24iOiJGdW5jdGlvblVwIiwiaWF0IjoxNjUyMjcxMzYwLCJleHAiOjE2NTI0NDQxNjB9.sVsKvSJ0XaubFoVk_jQjMmg7d67tHsGAeUtlWexR9-Y
-
-
-
-
-
-
-
-
-
-
 module.exports.authentication = authentication;
 module.exports.authorisation = authorisation;
