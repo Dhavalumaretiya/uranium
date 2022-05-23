@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const ObjectId=mongoose.Schema.Types.ObjectId
-const moment=require('moment')
 
 const booksSchema = new mongoose.Schema( { 
     title: {type:String, required:true, unique:true,trim:true},
-    excerpt: {type:String, required:true}, 
+    excerpt: {type:String, required:true},
+    bookCover:{type:String}, 
     userId: {type:ObjectId, required:true, ref:'User'},
     ISBN: {type:String, required:true, unique:true},
     category: {type:String, required:true},

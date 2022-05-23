@@ -13,6 +13,10 @@ const authentication = function (req, res, next) {
             return res.status(400).send({ status:false,message: "Enter x-api-key In Header" });
         }
         let decodeToken = jwt.decode(token)
+        var time= new Date().getTime()/1000;
+        if(time>decodeToken.exp){
+            return res.status(401).send({ status: false, message: "Token is expired." })
+        }
         if (!decodeToken) {
             return res.status(401).send({ status: false, message: "Not a valid Token " })
         }
@@ -21,16 +25,14 @@ const authentication = function (req, res, next) {
         
         if (!checktoken) { return res.status(401).send({ status: false, message: "please enter valid token" }) }
         
-
         req.userId = checktoken.userId;
-
         next()
     }
     catch (err) {
         res.status(500).send({ message: err.message });
     }
 }
-
+ 
 
 const authorisation = async function (req, res, next) {
     try {
@@ -58,6 +60,5 @@ const authorisation = async function (req, res, next) {
 }
 
 
-
 module.exports.authentication = authentication;
-module.exports.authorisation = authorisation;
+module.exports.authorisation = authorisation; 
