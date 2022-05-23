@@ -6,6 +6,12 @@ const mongoose = require('mongoose');
 const { query } = require("express");
 const aws = require("aws-sdk")
 
+aws.config.update({
+  accessKeyId: "AKIAY3L35MCRUJ6WPO6J",
+  secretAccessKey: "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",
+  region: "ap-south-1"
+})
+
 ///aws 
 let uploadFile = async (file) => {
   return new Promise(function (resolve, reject) {
@@ -19,7 +25,6 @@ let uploadFile = async (file) => {
       Body: file.buffer
     }
 
-
     s3.upload(uploadParams, function (err, data) {
       if (err) {
         return reject({ "error": err })
@@ -32,32 +37,30 @@ let uploadFile = async (file) => {
   })
 }
 
-
-
 //create book
 const createBook = async function (req, res) {
   try {
     let user = req.body.userId;
     validUser = req.userId
-
-    //aws
+    let Book = req.body
+    //Aws
     let files = req.files
     if (files && files.length > 0) {
 
       let uploadedFileURL = await uploadFile(files[0])
 
-      getBodyData.bookCover = uploadedFileURL
+      Book.bookCover = uploadedFileURL
     }
     else {
       res.status(400).send({ msg: "No file found" })
     }
+
 
     if (mongoose.Types.ObjectId.isValid(user) == false) {
       return res.status(400).send({ status: false, message: "Invalid user id" })
     }
     if (validUser !== user) { return res.status(403).send({ staus: false, message: "Not Authorised!!" }) }
 
-    let Book = req.body
     let arr = Object.keys(Book)
     let ISBNs = /^[0-9-]{14}$/.test(req.body.ISBN)
     let date = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/.test(req.body.releasedAt) //YYYY-MM-DD
